@@ -13,9 +13,9 @@ private:
 
 public:
 
-    //Counter() = default;
+    Counter() = default;
 
-    Counter(int value = 1) : count{ value }
+    Counter(int value) : count{ value }
     {
 
     }
@@ -36,7 +36,6 @@ public:
     }
 };
 
-int enterStartCount();
 void enterCommand(Counter* counter);
 
 int main()
@@ -44,19 +43,9 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    Counter counter(enterStartCount());
-    enterCommand(&counter);
+    Counter* counter = nullptr;
 
-    system("pause");
-    return EXIT_SUCCESS;
-}
-
-// Функция ввода начального значения счётчика, или значения счётчика по умолчанию = 1
-int enterStartCount()
-{
-    int startCount{ 1 };
-
-    while (true)
+    while (true)        // Использовал цикл на случай ввода неправильного слова
     {
         std::cout << "Вы хотите указать начальное значение счётчика? Введите да или нет: " << std::flush;
         std::string word{};
@@ -64,7 +53,9 @@ int enterStartCount()
         if (word == "да")
         {
             std::cout << std::flush << "Введите начальное значение счётчика: " << std::flush;
+            int startCount{};
             std::cin >> startCount;
+            counter = new Counter(startCount);
             break;
         }
         else if (word != "нет")
@@ -74,12 +65,19 @@ int enterStartCount()
         }
         else
         {
+            counter = new Counter();
             break;
         }
     }
 
-    return startCount;
+    enterCommand(counter);
+    delete counter;
+
+    system("pause");
+    return EXIT_SUCCESS;
 }
+
+
 
 // Функция управления счётчиком
 void countController(Counter* counter, char command)
