@@ -7,6 +7,11 @@ private:
 	double num1{};
 	double num2{};
 
+	
+
+public:
+	Calculator() = default;
+
 	double add()
 	{
 		return num1 + num2;
@@ -37,11 +42,6 @@ private:
 		return num2 / num1;
 	}
 
-public:
-	Calculator() = default;
-
-	
-
 	bool set_num1(double num1)
 	{
 		if (num1 == 0)
@@ -61,23 +61,6 @@ public:
 		this->num2 = num2;
 		return true;
 	}
-
-
-	void printError()
-	{
-		std::cout << "Неверный ввод!" << std::endl;
-	}
-
-	void printData()
-	{
-		std::cout.precision(2);
-		std::cout << "num1 + num2 = " << add() << std::endl <<
-			"num1 - num2 = " << substract_1_2() << std::endl <<
-			"num2 - num1 = " << substract_2_1() << std::endl << 
-			"num1 / num2 = " << std::fixed << divide_1_2() << std::endl <<
-			"num2 / num1 = " << std::fixed << divide_2_1() << std::endl;
-	}
-
 };
 
 
@@ -88,15 +71,6 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	calculation();
-	calculation();
-
-	system("pause");
-	return EXIT_SUCCESS;
-}
-
-void calculation()
-{
 	int num1{}, num2{};
 	Calculator calculator;
 
@@ -106,7 +80,7 @@ void calculation()
 		std::cin >> num1;
 		if (!calculator.set_num1(num1))
 		{
-			calculator.printError();
+			std::cout << "Неверный ввод!" << std::endl;
 			continue;
 		}
 		break;
@@ -118,11 +92,19 @@ void calculation()
 		std::cin >> num2;
 		if (!calculator.set_num2(num2))
 		{
-			calculator.printError();
+			std::cout << "Неверный ввод!" << std::endl;
 			continue;
 		}
 		break;
 	}
 
-	calculator.printData();
+	std::cout.precision(2);
+	std::cout << "num1 + num2 = " << calculator.add() << std::endl <<
+		"num1 - num2 = " << calculator.substract_1_2() << std::endl <<
+		"num2 - num1 = " << calculator.substract_2_1() << std::endl <<
+		"num1 / num2 = " << std::fixed << calculator.divide_1_2() << std::endl <<
+		"num2 / num1 = " << std::fixed << calculator.divide_2_1() << std::endl;
+
+	system("pause");
+	return EXIT_SUCCESS;
 }
